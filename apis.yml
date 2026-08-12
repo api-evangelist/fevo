@@ -1,7 +1,16 @@
 aid: fevo
 name: Fevo
-description: 'Fevo is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: 'FEVO is a New York social-commerce and group-ticketing platform, launched
+  in 2016, that lets fans buy, split and share orders for live events together. Its
+  Social Checkout drawer and Distributed Commerce Button embed into a client''s own
+  site, sitting in front of existing ticketing and inventory systems, while the FEVO
+  Enterprise console at gofevo.com handles offer creation, gating, discounting, payouts
+  and reporting. The developer surface is deliberately narrow: a client-side JavaScript
+  widget (GMWidget) any partner can embed, and an Order API data feed that pushes
+  FEVO Sales Report fields into a customer data warehouse using a User ID and Access
+  Key issued by a FEVO representative. FEVO reports 800+ brands in sports, music and
+  entertainment and more than 24 million tickets sold.'
+image: https://cdn.prod.website-files.com/63c2beaea55341844ce65d4e/682d14798ca7154c6364947c_FEVO%20Logomark.png
 url: https://raw.githubusercontent.com/api-evangelist/fevo/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
@@ -12,12 +21,133 @@ created: '2026-08-12'
 modified: '2026-08-12'
 tags:
 - Company
-apis: []
+- Ticketing
+- Events
+- Group Sales
+- Social Commerce
+- E-Commerce
+- Checkout
+- Sports
+- Live Entertainment
+- Embedded Commerce
+apis:
+- aid: fevo:order-api
+  name: FEVO Order API
+  description: 'A data-feed API that returns every field in the FEVO Sales Report —
+    orders and order adjustments — so a customer can pull FEVO transaction data directly
+    into their own data warehouse. Queries run by Order Date or Event Date. Access
+    requires a User ID and Access Key issued per team by a FEVO representative; the
+    endpoint definitions document is distributed as a Salesforce content-delivery page
+    linked from the Help Center. No public reference, no machine-readable spec.'
+  humanURL: https://intercom.help/fevoenterprise/en/articles/8912590-api-faqs
+  x-base-url: unpublished
+  x-base-url-note: 'FEVO names no host for the Order API on any public page. The endpoint
+    definitions are linked only to a Salesforce content-delivery URL that requires JavaScript
+    to view (probed 2026-08-12: HTTP 200, 1,359-byte contentDistribution shell, x-robots-tag
+    noindex). api.fevo.com and api.gofevo.com do not resolve. Recorded as missing rather than
+    guessed from the domain.'
+  tags:
+  - Orders
+  - Reporting
+  - Data Feed
+  properties:
+  - type: Documentation
+    url: https://intercom.help/fevoenterprise/en/articles/8912590-api-faqs
+  - type: Authentication
+    url: authentication/fevo-authentication.yml
+  - type: ErrorCatalog
+    url: errors/fevo-problem-types.yml
+- aid: fevo:embedded-checkout
+  name: FEVO Embedded Checkout (Distributed Commerce Button)
+  description: 'The client-side embed surface. A single script tag loads GMWidget from
+    gofevo.com (or gofevo.uk for the UK), and GMWidget.open(''offerSlug'') opens the
+    FEVO Social Checkout drawer over the partner''s own page for the named offer. The
+    embedding domain must be allow-listed by FEVO before the drawer will render.'
+  humanURL: https://intercom.help/fevoenterprise/en/articles/8986183-distributed-commerce-button
+  baseURL: https://www.gofevo.com
+  tags:
+  - Checkout
+  - Widget
+  - Embedded Commerce
+  properties:
+  - type: Documentation
+    url: https://intercom.help/fevoenterprise/en/collections/9890359-embedded-checkout
+  - type: Components
+    url: components/fevo-components.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: DomainSecurity
+  url: security/fevo-domain-security.yml
 - type: Website
+  url: https://www.fevo.com
+- type: SecondaryMarketListing
   url: https://forgeglobal.com/fevo_stock/
+- type: Documentation
+  url: https://intercom.help/fevoenterprise/en/
+- type: Support
+  url: https://www.fevo.com/ticket-help
+- type: Blog
+  url: https://www.fevo.com/blog
+- type: SignUp
+  url: https://www.fevo.com/demo-request
+- type: Login
+  url: https://www.gofevo.com/manage/
+- type: TermsOfService
+  url: https://wf.fevo.com/terms-of-use
+- type: PrivacyPolicy
+  url: https://wf.fevo.com/privacy-policy
+- type: GitHubOrganization
+  url: https://github.com/fevo-tech
+- type: ChangeLog
+  url: changelog/fevo-changelog.yml
+- type: Packages
+  url: packages/fevo-packages.yml
+- type: SDKs
+  url: packages/fevo-packages.yml
+- type: Components
+  url: components/fevo-components.yml
+- type: Conventions
+  url: conventions/fevo-conventions.yml
+- type: Lifecycle
+  url: lifecycle/fevo-lifecycle.yml
+- type: Authentication
+  url: authentication/fevo-authentication.yml
+- type: ErrorCatalog
+  url: errors/fevo-problem-types.yml
+- type: Conformance
+  url: conformance/fevo-conformance.yml
+- type: Compliance
+  url: security/fevo-trust-center.yml
+- type: TrustCenter
+  url: security/fevo-trust-center.yml
+- type: Security
+  url: security/fevo-vulnerability-disclosure.yml
+- type: VulnerabilityDisclosure
+  url: security/fevo-vulnerability-disclosure.yml
+- type: Plans
+  url: plans/fevo-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/fevo-rate-limits.yml
+- type: LLMsTxt
+  url: llms/fevo-llms.txt
+x-contract-note: 'FEVO publishes no machine-readable contract. Full STEP 0b discovery was run
+  on 2026-08-12 against every host: /openapi.json, /openapi.yaml, /swagger.json, /api-docs,
+  /docs and /redoc on www.fevo.com, www.gofevo.com, report.gofevo.com and fevo-enterprise.com
+  (all 404); /graphql (404); /.well-known/{security.txt,openid-configuration,oauth-authorization-server,api-catalog,ai-plugin.json,agent-card.json,agent.json}
+  on every host (all 404); /llms.txt (404). api.fevo.com and api.gofevo.com do not resolve.
+  No MCP server, no A2A agent card, no AsyncAPI, no webhook catalog, no Postman collection.
+  The GitHub org github.com/fevo-tech holds 11 repos, every one a fork. The Order API''s own
+  definitions document is a Salesforce content-delivery page that requires JavaScript, and
+  access requires credentials issued by a FEVO representative. Separately, the entire legacy
+  Fevo.js stack — https://www.fevo.com/docs/v1, https://www.fevo.com/api/v1 and
+  https://sdk.fevo.com/v1/fevo.js — returned HTTP 502 with CloudFront reporting it could not
+  resolve the origin domain name, with no deprecation notice ever published.'
+x-enrichment:
+  date: '2026-08-12'
+  status: enriched
+  artifacts_added: 15
+  pass: local-v1

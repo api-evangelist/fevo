@@ -1,0 +1,102 @@
+generated: '2026-08-12'
+method: probed
+source: live probes of every FEVO host on 2026-08-12
+note: >-
+  Every /.well-known/ path returned 404 on every FEVO host probed. Nothing was saved and
+  NO WellKnown, SecurityTxt, APICatalog or AgentCard pointer is emitted in apis.yml — this
+  file records a verified absence, which is data, not a served discovery surface. FEVO does
+  publish a security contact (security_questions@fevo.com) but only as prose on its
+  marketing security page, not as an RFC 9116 security.txt.
+
+hosts:
+  - host: https://www.fevo.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+        file: null
+      - path: /.well-known/openid-configuration
+        status: 404
+        file: null
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+        file: null
+      - path: /.well-known/api-catalog
+        status: 404
+        file: null
+      - path: /.well-known/ai-plugin.json
+        status: 404
+        file: null
+      - path: /.well-known/agent-card.json
+        status: 404
+        file: null
+      - path: /.well-known/agent.json
+        status: 404
+        file: null
+      - path: /llms.txt
+        status: 404
+        file: null
+
+  - host: https://www.gofevo.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+        file: null
+      - path: /.well-known/openid-configuration
+        status: 404
+        file: null
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+        file: null
+      - path: /.well-known/api-catalog
+        status: 404
+        file: null
+      - path: /.well-known/ai-plugin.json
+        status: 404
+        file: null
+      - path: /.well-known/agent-card.json
+        status: 404
+        file: null
+      - path: /.well-known/agent.json
+        status: 404
+        file: null
+      - path: /llms.txt
+        status: 404
+        file: null
+      - path: /robots.txt
+        status: 404
+        file: null
+
+  - host: https://report.gofevo.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+        file: null
+      - path: /.well-known/openid-configuration
+        status: 404
+        file: null
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+        file: null
+      - path: /.well-known/api-catalog
+        status: 404
+        file: null
+      - path: /.well-known/ai-plugin.json
+        status: 404
+        file: null
+      - path: /.well-known/agent.json
+        status: 404
+        file: null
+      - path: /robots.txt
+        status: 404
+        file: null
+
+  - host: https://fevo-enterprise.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+        file: null
+
+summary:
+  paths_probed: 30
+  documents_found: 0
+  pointer_emitted: false

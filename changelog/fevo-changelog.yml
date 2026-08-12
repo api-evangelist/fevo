@@ -1,0 +1,102 @@
+generated: '2026-08-12'
+method: searched
+source: https://intercom.help/fevoenterprise/en/collections/240291-latest-product-releases
+name: FEVO Enterprise product releases
+docs: https://intercom.help/fevoenterprise/en/collections/240291-latest-product-releases
+format: html
+feed: null
+note: >-
+  FEVO publishes a genuine dated changelog, but as Intercom Help Center articles rather than
+  a developer changelog: there is no RSS/Atom feed, no per-release permalink scheme beyond
+  the article slug, and the notes describe console and buyer-experience changes, not
+  contract changes. Nothing in the release history references the Order API or the embed
+  script, so an integrator cannot use this feed to learn that an interface changed.
+
+scheme: calendar-versioned release trains
+version_format: 'YY.N (e.g. 26.5), announced as "Product Release: <Month D, YYYY>"'
+current_version: '26.5'
+current_version_date: '2026-06-21'
+cadence: >-
+  Roughly monthly. 15 releases recorded between 2025-04-10 and 2026-06-21; the longest
+  observed gap is 2025-11-17 to 2026-02-11.
+breaking_change_policy: null
+breaking_change_policy_note: >-
+  None published. The release notes carry no deprecation, breaking-change or migration
+  section, and no API version is named in any entry.
+
+entries:
+  - version: '26.5'
+    date: '2026-06-21'
+    url: https://intercom.help/fevoenterprise/en/articles/15544560-product-release-june-21-2026
+    breaking: false
+    highlights:
+      - Multi-level offer gating — combine promo codes, identity verification, email domains, zip codes and payment checks on a single offer
+      - Discount code usage caps — total redemption limits per code
+      - Optional add-ons no longer block the checkout confirm button
+      - '"Digital with QR" buyers now receive a ticket-access button in confirmation emails'
+      - Merchandise/add-on titles shown during checkout
+      - Bundle and group navigation — group name in header, back-navigation to the group landing page
+      - Flex Plans "select all" across filtered event lists
+      - Scrollable preview for AI-generated offer descriptions
+      - Org user table sorts alphabetically by first name
+  - version: null
+    date: '2026-05-19'
+    url: https://intercom.help/fevoenterprise/en/articles/15182400-product-release-may-19-2026
+    breaking: false
+  - version: null
+    date: '2026-04-19'
+    url: https://intercom.help/fevoenterprise/en/articles/14724346-product-release-april-19-2026
+    breaking: false
+  - version: null
+    date: '2026-03-17'
+    url: https://intercom.help/fevoenterprise/en/articles/14092444-product-release-march-17-2026
+    breaking: false
+  - version: null
+    date: '2026-02-11'
+    url: https://intercom.help/fevoenterprise/en/articles/13691093-product-release-february-11-2026
+    breaking: false
+  - version: null
+    date: '2025-11-17'
+    url: https://intercom.help/fevoenterprise/en/articles/12845499-product-release-november-17-2025
+    breaking: false
+  - version: null
+    date: '2025-10-29'
+    url: https://intercom.help/fevoenterprise/en/articles/12601778-product-release-october-29-2025
+    breaking: false
+  - version: null
+    date: '2025-09-17'
+    url: https://intercom.help/fevoenterprise/en/articles/12278284-product-release-september-17-2025
+    breaking: false
+  - version: null
+    date: '2025-08-19'
+    url: https://intercom.help/fevoenterprise/en/articles/12037861-product-release-august-19-2025
+    breaking: false
+  - version: null
+    date: '2025-07-24'
+    url: https://intercom.help/fevoenterprise/en/articles/11801383-product-release-july-24-2025
+    breaking: false
+  - version: null
+    date: '2025-07-01'
+    url: https://intercom.help/fevoenterprise/en/articles/11662529-product-release-july-1-2025
+    breaking: false
+  - version: null
+    date: '2025-06-17'
+    url: https://intercom.help/fevoenterprise/en/articles/11584147-product-release-june-17-2025
+    breaking: false
+  - version: null
+    date: '2025-05-28'
+    url: https://intercom.help/fevoenterprise/en/articles/11163940-product-release-may-28-2025
+    breaking: false
+  - version: null
+    date: '2025-04-28'
+    url: https://intercom.help/fevoenterprise/en/articles/11155295-product-release-april-28-2025
+    breaking: false
+  - version: null
+    date: '2025-04-10'
+    url: https://intercom.help/fevoenterprise/en/articles/11059990-product-release-april-10-2025
+    breaking: false
+
+x-evidence:
+  fetched: '2026-08-12'
+  url: https://intercom.help/fevoenterprise/en/collections/240291-latest-product-releases
+  http_status: 200

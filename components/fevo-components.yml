@@ -1,0 +1,144 @@
+generated: '2026-08-12'
+method: searched
+source: >-
+  https://intercom.help/fevoenterprise/en/collections/9890359-embedded-checkout and
+  https://intercom.help/fevoenterprise/en/articles/8986183-distributed-commerce-button,
+  plus direct inspection of the served bundle at
+  https://gofevo.com/react/dist/js/widget/gm-widget.js?ver=1
+note: >-
+  FEVO's entire public developer surface is client-side. There is no server SDK, no REST
+  reference and no spec — the integration a partner performs is dropping a script tag on
+  their own site and calling one global function. That makes this artifact, not
+  packages/, the real record of how FEVO is integrated.
+
+families:
+
+  - family: Social Checkout drawer
+    description: >-
+      FEVO's flagship surface. An iframe-hosted checkout drawer that overlays the
+      partner's own page so buyers never leave it, handling group ordering, seat
+      selection, splitting payment across a group, add-ons, merchandise and delivery.
+    loader: gm-widget.js
+    components:
+      - name: GMWidget
+        type: javascript-global
+        description: >-
+          The single documented entry point. GMWidget.open('offerSlug') mounts the FEVO
+          checkout drawer for the named offer. The offer slug is the last path segment of
+          the offer URL — 'gameday2' from https://gofevo.com/event/gameday2.
+        methods:
+          - signature: GMWidget.open(offerSlug)
+            description: Open the FEVO Social Checkout drawer for an offer.
+            example: <button type="button" onclick="GMWidget.open('gameday2');">BUY</button>
+        mount: iframe injected into the host page (container id gm-widget-container)
+        events_note: >-
+          The served bundle sets up a cross-domain Google Analytics listener across the
+          FEVO host set and reacts to an access_code= query parameter for gated offers.
+          No public callback or event API is documented.
+
+    loaders:
+      - region: US
+        url: https://gofevo.com/react/dist/js/widget/gm-widget.js?ver=1
+        tag: <script src="https://gofevo.com/react/dist/js/widget/gm-widget.js?ver=1"></script>
+        placement: footer, or immediately before the closing </body> tag, site-wide
+        status: 200
+        observed: '2026-08-12'
+      - region: UK
+        url: https://gofevo.uk/react/dist/js/widget/gm-widget.js?ver=1
+        tag: <script src="https://gofevo.uk/react/dist/js/widget/gm-widget.js?ver=1"></script>
+        placement: footer, or immediately before the closing </body> tag, site-wide
+        status: 200
+        observed: '2026-08-12'
+        note: >-
+          Documented as the UK loader but returns a 120-byte text/html body rather than
+          JavaScript. A partner following the UK instructions verbatim gets no widget.
+
+    prerequisites:
+      - >-
+        The embedding domain must be allow-listed by FEVO before the drawer will render.
+        FEVO instructs partners to send the embedding URL to their Success Rep or to
+        marketingservices@fevo.com.
+    allowed_parent_origins:
+      - fevogm.com
+      - fevo-enterprise.uk
+      - fevo-enterprise.com
+      - groupmatics.local
+      - groupmatics.events
+      - gofevo.com
+      - fevo.com
+    allowed_parent_origins_source: >-
+      read directly from the served gm-widget.js bundle on 2026-08-12; this is the widget's
+      own origin allow-list, not a documented list
+
+  - family: Fevo Button SDK (legacy)
+    description: >-
+      The original embed, documented at https://www.fevo.com/docs/v1. Fevo.init() binds a
+      publisher key and environment; Fevo.purchase(selector) attaches the buy flow to any
+      element matching a CSS selector, with the target event named by a data-event-key
+      attribute. Optional promo-code prompt at checkout.
+    loader: fevo.js
+    status: unavailable
+    components:
+      - name: Fevo
+        type: javascript-global
+        methods:
+          - signature: 'Fevo.init({ publisherKey: ''...'', env: ''prod'' })'
+            description: Initialize the SDK against a publisher key issued by a FEVO account manager.
+          - signature: Fevo.purchase(cssSelector)
+            description: Bind the FEVO buy flow to every element matching the selector.
+        attributes:
+          - name: data-event-key
+            description: Identifies the event the button sells tickets to.
+    loaders:
+      - region: US
+        url: https://sdk.fevo.com/v1/fevo.js
+        tag: <script src="https://sdk.fevo.com/v1/fevo.js"></script>
+        placement: before the closing </body> tag
+        status: 502
+        observed: '2026-08-12'
+        note: >-
+          CloudFront returns "wasn't able to resolve the origin domain name". The
+          documentation page https://www.fevo.com/docs/v1 and the legacy REST base
+          https://www.fevo.com/api/v1 fail the same way, so the whole legacy Fevo.js
+          stack — SDK, docs and API — is currently unreachable behind the same broken
+          origin. The Internet Archive last captured a working bundle on 2024-07-18.
+
+  - family: Hosted checkout pages
+    description: >-
+      FEVO also serves the offer as a first-party hosted page, so a partner can link out
+      instead of embedding.
+    components:
+      - name: Offer page
+        type: hosted-page
+        url_pattern: https://www.gofevo.com/group/{offerSlug}
+        note: >-
+          https://gofevo.com/event/{slug} redirects to https://www.gofevo.com/group/{slug}.
+          Observed 2026-08-12: HTTP 200.
+      - name: FEVO Enterprise console
+        type: hosted-page
+        url: https://www.gofevo.com/manage/
+      - name: FEVO Enterprise reporting
+        type: hosted-page
+        url: https://report.gofevo.com/
+
+third_party_surfaces_loaded_by_checkout:
+  note: >-
+    Observed in the served HTML of a live offer page on 2026-08-12. Recorded because it is
+    the only public evidence of FEVO's payment and wallet stack.
+  surfaces:
+    - Braintree web SDK 3.99.0 (client, hosted-fields, 3-D Secure, PayPal, Venmo, Google Pay, Apple Pay, data-collector)
+    - Shift4 (js.dev.shift4.com/shift4.js)
+    - Apple Pay JS SDK
+    - Google Pay JS
+
+x-evidence:
+  - fetched: '2026-08-12'
+    url: https://gofevo.com/react/dist/js/widget/gm-widget.js?ver=1
+    http_status: 200
+    content_type: text/javascript
+  - fetched: '2026-08-12'
+    url: https://sdk.fevo.com/v1/fevo.js
+    http_status: 502
+  - fetched: '2026-08-12'
+    url: https://www.gofevo.com/group/gameday2
+    http_status: 200

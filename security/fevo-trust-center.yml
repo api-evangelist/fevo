@@ -1,0 +1,78 @@
+generated: '2026-08-12'
+method: searched
+source: https://www.fevo.com/security
+name: FEVO Security
+url: https://www.fevo.com/security
+platform: self-hosted page (Webflow marketing site); no third-party trust portal
+note: >-
+  FEVO publishes a single, reasonably detailed security page covering organizational,
+  cloud, access and vendor-risk controls. Read it precisely: FEVO says its Information
+  Security Program "follows the criteria set forth by the SOC 2 Framework" and that it
+  "undergoes independent third-party assessments". It does NOT claim a completed SOC 2
+  Type I or Type II report, does not name an auditor, does not offer a report under NDA,
+  and names no other certification. No ISO 27001, PCI DSS, HIPAA, FedRAMP, GDPR or CCPA
+  certification is asserted on this page (a CCPA Notice exists separately in the site
+  footer). No downloadable evidence, no subprocessor list, no SIG/CAIQ.
+
+certifications:
+  - name: SOC 2
+    status: framework-alignment-claimed
+    type: null
+    auditor: null
+    report_available: false
+    evidence: >-
+      "Our Information Security Program follows the criteria set forth by the SOC 2
+      Framework." No report, date, scope or auditor is published.
+
+controls_published:
+  organizational:
+    - Information Security Program communicated org-wide
+    - Independent third-party assessments of security and compliance controls
+    - Independent third-party penetration test at least annually
+    - Documented roles and responsibilities; policies reviewed and accepted by staff
+    - Security awareness training (phishing, password management)
+    - Confidentiality agreements signed before first day
+    - Background checks on all new team members
+  cloud:
+    - Services hosted on AWS
+    - Data hosted on AWS and GCP databases, all located in the United States
+    - All databases encrypted at rest
+    - Applications encrypted in transit with TLS/SSL
+    - Vulnerability scanning and active threat monitoring
+    - Logging and monitoring of cloud services
+    - Backups via the hosting provider; monitoring alerts on failures
+    - Documented incident response with escalation, rapid mitigation and communication
+  access:
+    - Access to cloud infrastructure limited to authorized employees by role
+    - SSO, 2FA and strong password policies where available
+    - Least-privilege identity and access management
+    - Quarterly access reviews for sensitive systems
+    - Minimum password complexity requirements; company-issued password manager
+  vendor_risk:
+    - At least annual risk assessments, including fraud considerations
+    - Vendor review before authorizing a new vendor
+
+data_residency: United States (AWS and GCP)
+data_retention: 'transactional data retained up to six years (source: Order API FAQ)'
+
+payment_security_note: >-
+  Not claimed on the security page, but observed directly: a live FEVO offer page loads the
+  Braintree web SDK 3.99.0 (hosted fields, 3-D Secure, data collector) and Shift4, meaning
+  card data is captured in vendor-hosted fields rather than by FEVO. FEVO makes no PCI DSS
+  statement of its own.
+
+contact: security_questions@fevo.com
+
+gaps:
+  - No completed SOC 2 report offered, even under NDA
+  - No auditor, report date or scope named
+  - No subprocessor list
+  - No status/incident history page
+  - No RFC 9116 /.well-known/security.txt on any FEVO host
+  - No bug bounty or coordinated disclosure policy
+  - Page footer still reads "© 2023 FEVO Inc."
+
+x-evidence:
+  fetched: '2026-08-12'
+  url: https://www.fevo.com/security
+  http_status: 200

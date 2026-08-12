@@ -1,0 +1,53 @@
+generated: '2026-08-12'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: www.fevo.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Dec 18 23:59:59 2026 GMT
+  hsts: false
+- host: intercom.help
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Dec 15 23:59:59 2026 GMT
+  hsts: true
+  hsts_max_age: 63072000
+- host: www.gofevo.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Oct 22 00:02:00 2026 GMT
+  hsts: true
+  hsts_max_age: 47474747
+domains:
+- domain: fevo.com
+  dnssec: false
+  caa: []
+  spf: true
+  dmarc: true
+  dmarc_policy: none
+- domain: intercom.help
+  dnssec: false
+  caa: []
+  spf: false
+  dmarc: true
+  dmarc_policy: reject
+- domain: gofevo.com
+  dnssec: false
+  caa: []
+  spf: true
+  dmarc: true
+  dmarc_policy: quarantine
+  x-note: probed by hand 2026-08-12; the script grouped hosts by registrable domain and
+    did not emit a row for the checkout host's domain
+x-findings:
+- HSTS is not set on www.fevo.com, the host that serves the marketing site, the security
+  page and the legacy /api/v1 and /docs/v1 paths. www.gofevo.com, the host that serves
+  checkout, does set it (max-age 47474747).
+- No DNSSEC on fevo.com or gofevo.com.
+- No CAA record on fevo.com or gofevo.com, so any public CA may issue for either domain.
+- DMARC on fevo.com is p=none — published but not enforcing. gofevo.com is p=quarantine.
+- 'Availability defect observed the same day: https://sdk.fevo.com/v1/fevo.js,
+  https://www.fevo.com/docs/v1 and https://www.fevo.com/api/v1 all return HTTP 502 with
+  CloudFront reporting it cannot resolve the origin domain name. A dangling CDN origin is
+  a security posture item, not only an uptime one.'

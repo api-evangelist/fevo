@@ -1,0 +1,87 @@
+generated: '2026-08-12'
+method: searched
+source: >-
+  https://intercom.help/fevoenterprise/en/articles/8912590-api-faqs (Order API),
+  https://intercom.help/fevoenterprise/en/articles/8986183-distributed-commerce-button
+  (embed), https://www.fevo.com/docs/v1 (legacy Fevo.js publisher key, page currently 502)
+note: >-
+  Derived from no OpenAPI — FEVO publishes no machine-readable contract, so every scheme
+  below is transcribed from the provider's own prose documentation. No OAuth 2.0, no
+  OpenID Connect, no scopes, no token endpoint and no key-rotation or revocation guidance
+  is published anywhere on FEVO's public surface. Credential issuance is a human process
+  routed through a FEVO representative.
+
+schemes:
+
+  - id: order-api-user-id-access-key
+    api: FEVO Order API
+    type: apiKey
+    model: static credential pair
+    credentials:
+      - name: User ID
+        description: >-
+          Identifies the requesting team. An organization that manages more than one team
+          receives a distinct User ID per team.
+      - name: Access Key
+        description: The secret paired with the User ID. Distinct per team.
+    issuance: >-
+      "Connect with your FEVO Representative to capture your unique User ID(s) and Access
+      Key(s) in order to connect." There is no self-service key issuance, no developer
+      console for keys, and no documented key lifecycle.
+    transport: not published
+    location: not published
+    rotation_policy: not published
+    revocation: not published
+    scopes: none published
+    failure_mode: >-
+      FEVO documents that an HTTP 502 Server Error means the credentials are wrong,
+      specifically the User ID when an organization manages more than one key. Returning a
+      gateway status for an authentication failure is a defect on its own terms: 502 is
+      indistinguishable from a genuine upstream outage, and FEVO's own CDN was in fact
+      returning 502 across www.fevo.com/api/v1 and sdk.fevo.com on 2026-08-12.
+    docs: https://intercom.help/fevoenterprise/en/articles/8912590-api-faqs
+    reference_note: >-
+      "Order API definitions" are linked from the FAQ to a Salesforce content-delivery URL
+      (fevo.my.salesforce.com/sfc/p/...). Probed 2026-08-12: HTTP 200 but the body is a
+      1,359-byte Salesforce contentDistribution shell with x-robots-tag noindex,nofollow
+      — a JavaScript-rendered viewer, not a fetchable document.
+
+  - id: fevojs-publisher-key
+    api: Fevo Button SDK (legacy)
+    type: apiKey
+    model: public publishable key, browser-side
+    credentials:
+      - name: publisherKey
+        description: >-
+          Passed to Fevo.init({ publisherKey, env }). Public by construction — it ships in
+          the page source. Issued by a FEVO account manager.
+      - name: env
+        description: Environment selector; 'prod' is the documented value.
+    issuance: contact your FEVO account manager
+    transport: JavaScript initialization argument, embedded in the host page
+    rotation_policy: not published
+    scopes: none published
+    docs: https://www.fevo.com/docs/v1
+    status_note: https://www.fevo.com/docs/v1 returned HTTP 502 on 2026-08-12.
+
+  - id: gmwidget-domain-allowlist
+    api: FEVO Embedded Checkout (Distributed Commerce Button)
+    type: origin-allowlist
+    model: >-
+      No credential at all. The Distributed Commerce Button carries no key; authorization
+      is enforced by FEVO allow-listing the embedding domain. "If you have not implemented
+      the FEVO drawer on your website before, your domain may need to be whitelisted."
+    issuance: >-
+      Send the embedding URL to your FEVO Success Rep or to marketingservices@fevo.com.
+    rotation_policy: not applicable
+    scopes: none
+    docs: https://intercom.help/fevoenterprise/en/articles/8986183-distributed-commerce-button
+
+summary:
+  oauth2: false
+  openid_connect: false
+  api_key: true
+  mutual_tls: false
+  scopes_published: false
+  self_service_credentials: false
+  credential_issuance: human, via a FEVO representative

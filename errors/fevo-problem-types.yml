@@ -1,0 +1,49 @@
+generated: '2026-08-12'
+method: searched
+source: https://intercom.help/fevoenterprise/en/articles/8912590-api-faqs
+format: none
+format_note: >-
+  Not RFC 9457. FEVO publishes no error envelope, no error code registry and no
+  application/problem+json media type — there is no OpenAPI to derive 4xx/5xx responses
+  from. Exactly one error condition is documented anywhere on FEVO's public surface, and
+  it is documented in an FAQ answer rather than a reference.
+envelope: not published
+request_id_header: not published
+
+problem_types:
+  - status: 502
+    title: Server Error
+    meaning: Incorrect API credentials on the FEVO Order API.
+    remediation: >-
+      "Please double check your User ID. If you manage more than one key, the User ID is
+      different." Each team in an organization has its own User ID and Access Key pair.
+    source: https://intercom.help/fevoenterprise/en/articles/8912590-api-faqs
+    x-review: >-
+      Using 502 Bad Gateway to signal an authentication failure is semantically wrong and
+      operationally dangerous: it is the same status a broken upstream returns, so a client
+      cannot distinguish a bad key from a FEVO outage and will retry a request that can
+      never succeed. This is not hypothetical for FEVO — on 2026-08-12 CloudFront was
+      returning genuine 502s ("wasn't able to resolve the origin domain name") across
+      https://www.fevo.com/api/v1, https://www.fevo.com/docs/v1 and
+      https://sdk.fevo.com/v1/fevo.js. The correct status for bad credentials is 401.
+
+domain_semantics:
+  note: >-
+    Not errors, but the only other machine-relevant status vocabulary FEVO publishes. Kept
+    here because an integrator consuming the Order API has nowhere else to find it.
+  order_adjustment_request_types:
+    - code: 1
+      meaning: Cancel
+    - code: 7
+      meaning: Partial Refund
+  order_adjustment_status_codes:
+    - code: 1
+      meaning: Approved
+      note: FEVO states this is the only status that should come through.
+
+gaps:
+  - No error code registry
+  - No error response schema or envelope
+  - No RFC 9457 problem+json support
+  - No documented rate-limit or throttling error
+  - No correlation/request identifier documented for support escalation

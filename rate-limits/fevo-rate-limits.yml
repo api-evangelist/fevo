@@ -1,0 +1,26 @@
+generated: '2026-08-12'
+method: searched
+source: >-
+  https://intercom.help/fevoenterprise/en/articles/8912590-api-faqs and a walk of the
+  FEVO Help Center collections (Getting Started, Reporting & Analytics, Embedded Checkout,
+  Troubleshooting) on 2026-08-12
+limit_count: 0
+limits: []
+headers: []
+status_on_exhaustion: null
+retry_after: null
+note: >-
+  FEVO documents no rate limits. The Order API FAQ — the only API reference a non-customer
+  can read — covers credentials, query filters, refresh cadence and retention, and says
+  nothing about request quotas, concurrency, throttling, backoff, or any RateLimit-*/
+  X-RateLimit-*/Retry-After response header. No 429 behaviour is described. The single
+  documented error condition is a 502 attributed to bad credentials
+  (see errors/fevo-problem-types.yml), which gives a client no way to distinguish
+  throttling from an outage from a wrong key. An honest zero: checked, nothing published.
+x-evidence:
+  - url: https://intercom.help/fevoenterprise/en/articles/8912590-api-faqs
+    status: 200
+    fetched: '2026-08-12'
+  - url: https://intercom.help/fevoenterprise/en/
+    status: 200
+    fetched: '2026-08-12'

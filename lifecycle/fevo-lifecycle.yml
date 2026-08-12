@@ -1,0 +1,83 @@
+generated: '2026-08-12'
+method: searched
+source: >-
+  https://intercom.help/fevoenterprise/en/collections/240291-latest-product-releases,
+  https://intercom.help/fevoenterprise/en/articles/8912590-api-faqs,
+  https://wf.fevo.com/security, plus live host probes on 2026-08-12
+note: >-
+  Searched for every operational-lifecycle surface the rating reads. FEVO has a real,
+  regularly updated product changelog and a published data-retention commitment, and
+  nothing else: no status page, no versioning policy, no deprecation policy, no SLA. No
+  StatusPage or Deprecation pointer is emitted in apis.yml, because neither exists.
+
+versioning:
+  policy_published: false
+  policy_url: null
+  scheme: >-
+    Calendar-numbered product releases (26.5 on 2026-06-21). The legacy Fevo.js REST surface
+    was path-versioned at /api/v1; the Order API carries no version identifier.
+  current_product_version: '26.5'
+  current_product_version_date: '2026-06-21'
+
+deprecation:
+  policy_published: false
+  policy_url: null
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  notice_period: null
+  deprecated_operations: []
+  note: >-
+    No deprecation policy, no advance-notice commitment, and no RFC 8594 Sunset/Deprecation
+    header support is documented. There is also no announced deprecation of the legacy
+    Fevo.js stack — yet https://sdk.fevo.com/v1/fevo.js, https://www.fevo.com/docs/v1 and
+    https://www.fevo.com/api/v1 all returned HTTP 502 on 2026-08-12 with CloudFront
+    reporting it could not resolve the origin domain name. An interface that stops
+    answering without ever being marked deprecated is the failure mode a deprecation policy
+    exists to prevent.
+
+status_page:
+  published: false
+  url: null
+  probes:
+    - url: https://status.fevo.com
+      result: NXDOMAIN
+    - url: https://status.gofevo.com
+      result: NXDOMAIN
+    - url: https://fevo.statuspage.io
+      status: 200
+      note: redirects to atlassian.com/software/statuspage — the vendor marketing page, not a FEVO status page
+  note: >-
+    FEVO operates an enterprise ticketing platform in front of live on-sale moments and
+    publishes no incident or uptime page of any kind.
+
+sla:
+  published: false
+  url: null
+
+support:
+  channels:
+    - name: FEVO Help Center
+      url: https://intercom.help/fevoenterprise/en/
+    - name: Ticket buyer help
+      url: https://www.fevo.com/ticket-help
+    - name: Help form
+      url: https://www.fevo.com/help-form
+    - name: Security questions
+      url: mailto:security_questions@fevo.com
+    - name: Embed allow-listing requests
+      url: mailto:marketingservices@fevo.com
+  api_support: >-
+    Routed through the customer's named FEVO Representative / Success Rep. There is no
+    developer support channel, forum, or community.
+
+data_lifecycle:
+  retention: transactional data retained up to six years
+  deletion: soft delete
+  freshness: real-time; forward-dated data delayed up to one hour
+  source: https://intercom.help/fevoenterprise/en/articles/8912590-api-faqs
+
+training:
+  name: FEVO Academy
+  url: http://academy.fevo-enterprise.com
+  note: Customer enablement, not developer documentation.

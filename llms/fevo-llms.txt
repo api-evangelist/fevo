@@ -1,0 +1,88 @@
+# FEVO
+
+> FEVO is a New York social-commerce and group-ticketing platform, launched in 2016, that
+> lets fans buy, split and share orders for live events together. Its Social Checkout
+> drawer embeds into a client's own site in front of existing ticketing and inventory
+> systems, while the FEVO Enterprise console handles offer creation, gating, discounting,
+> payouts and reporting.
+
+<!--
+generated: 2026-08-12
+method: generated
+source: API Evangelist enrichment pipeline, from all/fevo/apis.yml and the repo artifacts.
+        FEVO does not publish an llms.txt: https://www.fevo.com/llms.txt -> 404,
+        https://www.gofevo.com/llms.txt -> 404 (probed 2026-08-12).
+-->
+
+## What an agent can actually do here
+
+FEVO publishes **no machine-readable contract** — no OpenAPI, AsyncAPI, GraphQL SDL,
+JSON Schema, Postman collection or `.well-known` discovery document on any host. There are
+exactly two integration surfaces, and neither is callable by an agent without a human step:
+
+1. **FEVO Order API** — a pull data feed of FEVO Sales Report fields (orders and order
+   adjustments) for loading into a customer data warehouse. Requires a User ID and Access
+   Key issued per team by a FEVO representative. The endpoint definitions live in a
+   Salesforce-hosted document that requires JavaScript to view.
+2. **FEVO Embedded Checkout (Distributed Commerce Button)** — a browser script tag. No
+   credential; FEVO must allow-list the embedding domain first.
+
+## Order API
+
+- API FAQ (the only public reference): https://intercom.help/fevoenterprise/en/articles/8912590-api-faqs
+- Auth: User ID + Access Key, issued by a FEVO representative. One pair per team.
+- Query by: Order Date or Event Date.
+- Payload: "All fields in the FEVO Sales Report."
+- Freshness: real-time; forward-dated data delayed up to one hour.
+- Mutability: on an adjustment, the original order is updated or removed AND an order
+  adjustment record is added. Order Adjustment Order # joins back to Order #.
+- Order Adjustment Request Types: 1 = Cancel, 7 = Partial Refund.
+- Order Adjustment Status Code: 1 = Approved (the only status expected).
+- Deletes: soft. Retention: transactional data up to six years.
+- Documented errors: HTTP 502 means the credentials are wrong — check the User ID.
+  There is no other error documentation, no rate-limit documentation, and no idempotency.
+
+## Embedded Checkout
+
+- Docs: https://intercom.help/fevoenterprise/en/articles/8986183-distributed-commerce-button
+- US loader: https://gofevo.com/react/dist/js/widget/gm-widget.js?ver=1
+- UK loader: https://gofevo.uk/react/dist/js/widget/gm-widget.js?ver=1 (documented, but
+  returns HTML rather than JavaScript as of 2026-08-12)
+- Call: `GMWidget.open('offerSlug')` — the slug is the last path segment of the offer URL.
+- Prerequisite: the embedding domain must be allow-listed. Contact marketingservices@fevo.com.
+- Hosted alternative: https://www.gofevo.com/group/{offerSlug}
+
+## Legacy Fevo.js Button SDK — currently unreachable
+
+- Docs: https://www.fevo.com/docs/v1 (HTTP 502 on 2026-08-12)
+- SDK: https://sdk.fevo.com/v1/fevo.js (HTTP 502 on 2026-08-12)
+- Legacy REST base: https://www.fevo.com/api/v1 (HTTP 502 on 2026-08-12)
+- CloudFront reports it cannot resolve the origin domain name. No deprecation notice was
+  ever published for this stack. Do not plan an integration against it.
+
+## Console and reporting
+
+- FEVO Enterprise console: https://www.gofevo.com/manage/
+- Reporting: https://report.gofevo.com/
+- Help Center: https://intercom.help/fevoenterprise/en/
+- Product releases (changelog): https://intercom.help/fevoenterprise/en/collections/240291-latest-product-releases
+- FEVO Academy: http://academy.fevo-enterprise.com
+
+## Company and commercial
+
+- Website: https://www.fevo.com
+- About: https://www.fevo.com/about-us
+- Security: https://www.fevo.com/security (SOC 2 framework alignment; security_questions@fevo.com)
+- Blog: https://www.fevo.com/blog
+- Terms: https://wf.fevo.com/terms-of-use
+- Privacy: https://wf.fevo.com/privacy-policy
+- Get access: https://www.fevo.com/demo-request — there is no pricing page and no
+  self-service signup. FEVO is enterprise, contact-sales only.
+- GitHub: https://github.com/fevo-tech (11 public repos, all forks; no first-party code)
+- npm: the @fevo-tech scope publishes internal build tooling, not API clients.
+
+## Optional
+
+- API Evangelist profile: https://apis.io/provider/fevo/
+- Repo artifacts: authentication/, conventions/, errors/, lifecycle/, changelog/,
+  components/, packages/, conformance/, security/, plans/, rate-limits/, well-known/

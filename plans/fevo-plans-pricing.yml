@@ -1,0 +1,31 @@
+generated: '2026-08-12'
+method: searched
+source: >-
+  https://www.fevo.com/ (site navigation), https://www.fevo.com/sitemap.xml,
+  https://www.fevo.com/pricing (404), https://wf.fevo.com/pricing (404),
+  https://www.fevo.com/demo-request (200)
+plan_count: 0
+currency: null
+billing_periods: []
+plans: []
+note: >-
+  FEVO publishes no pricing of any kind. There is no /pricing page on either the marketing
+  host or the Webflow host that backs it (both 404 on 2026-08-12), no pricing entry in the
+  sitemap, and no plan, tier, quota or overage statement anywhere on the public site. The
+  only commercial entry point is a "Demo Request" form. This is an enterprise
+  contact-sales motion: FEVO sells to sports, music and entertainment rights holders under
+  negotiated agreements, and the Order API and embed surface are entitlements of that
+  agreement rather than products with list prices. Recorded as an honest zero, not an
+  omission.
+commercial_model: enterprise, contact-sales only
+signup_url: https://www.fevo.com/demo-request
+x-evidence:
+  - url: https://www.fevo.com/pricing
+    status: 404
+    fetched: '2026-08-12'
+  - url: https://wf.fevo.com/pricing
+    status: 404
+    fetched: '2026-08-12'
+  - url: https://www.fevo.com/demo-request
+    status: 200
+    fetched: '2026-08-12'

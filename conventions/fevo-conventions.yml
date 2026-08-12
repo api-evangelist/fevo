@@ -1,0 +1,122 @@
+generated: '2026-08-12'
+method: searched
+source: >-
+  https://intercom.help/fevoenterprise/en/articles/8912590-api-faqs,
+  https://intercom.help/fevoenterprise/en/articles/8986183-distributed-commerce-button,
+  https://www.fevo.com/docs/v1 (502 on 2026-08-12, method surface recovered from the
+  provider's own documentation excerpts)
+note: >-
+  Cross-cutting semantics for FEVO's two interfaces. Every entry below is either something
+  FEVO states in its own documentation or a recorded absence. Nothing here is inferred from
+  a spec, because FEVO publishes none.
+
+auth:
+  style: static credential pair (User ID + Access Key) for the Order API; public publisher key or no credential at all for the browser embeds
+  see: authentication/fevo-authentication.yml
+
+idempotency:
+  supported: false
+  header: null
+  scope: null
+  retention: null
+  note: >-
+    No idempotency key, no retry-safety guidance and no at-least-once/exactly-once
+    statement is published for either interface. This matters more than usual here: the
+    Order API's only documented failure mode is a 502, which is exactly the class of
+    response a client is expected to retry, and FEVO gives a client no way to make that
+    retry safe.
+
+pagination:
+  style: not published
+  params: []
+  response_fields: []
+  note: >-
+    The Order API is documented as query-by-date ("You can run queries based on Order Date
+    or Event Date") with no statement about result-set size, cursors, offsets or truncation.
+
+filtering:
+  supported: true
+  params:
+    - name: Order Date
+      description: Query orders and order adjustments by the date the order was placed.
+    - name: Event Date
+      description: >-
+        Query by the date of the event. FEVO notes that order adjustments populate against
+        the event date, so the two filters return different adjustment sets for the same
+        underlying orders.
+  note: Parameter names, casing, formats and the request shape are not published.
+
+field_expansion:
+  supported: not published
+sparse_fields:
+  supported: not published
+metadata:
+  supported: not published
+
+request_tracing:
+  request_id_header: not published
+  note: >-
+    No correlation identifier is documented, so a customer reporting a bad Order API
+    response has nothing to hand FEVO support beyond the credentials and a timestamp.
+
+versioning:
+  api_versioning: >-
+    The legacy Fevo.js stack was path-versioned (/api/v1/..., sdk.fevo.com/v1/fevo.js). The
+    Order API publishes no version at all, and the Distributed Commerce Button loader is
+    versioned only by a ?ver=1 cache-busting query string.
+  product_versioning: >-
+    FEVO Enterprise ships calendar-numbered release trains (26.5 on 2026-06-21) announced
+    as Help Center articles. See changelog/fevo-changelog.yml.
+  deprecation_signaling: none published (no Sunset or Deprecation headers, no policy)
+
+error_envelope:
+  shape: not published
+  format: none (not RFC 9457)
+  see: errors/fevo-problem-types.yml
+
+rate_limit_signaling:
+  headers: none published
+  status_on_exhaustion: not published
+  see: rate-limits/fevo-rate-limits.yml
+
+data_semantics:
+  freshness: >-
+    "Data is real-time. Future is delayed up to 1 hour." — FEVO's own wording. Historic and
+    current order data is returned immediately; forward-dated (future event) data may lag by
+    up to one hour.
+  mutability: >-
+    Records are updated only when an order adjustment occurs. When one does, the original
+    order is updated or removed AND a separate order adjustment record is added. A consumer
+    replicating into a warehouse must therefore treat orders as mutable and reconcile
+    adjustments as a second stream, not append-only.
+  joins: >-
+    An Order Adjustment's Order # matches back to the Order #. That is the only join key
+    FEVO documents.
+  deletes: Soft deletes only.
+  retention: >-
+    Transactional data is retained up to six years. FEVO explicitly confirms a retention
+    policy exists.
+  unique_identifiers: >-
+    FEVO answers "No" when asked whether there are unique identifiers, keys or additional
+    business logic a consumer should know about from the start — beyond the Order Number,
+    which FEVO describes simply as "FEVO's Order Number".
+  payload: >-
+    "All fields in the FEVO Sales Report." The field list itself lives in the Salesforce-
+    hosted Order API definitions document, which is not machine-readable.
+
+embed_conventions:
+  entry_point: GMWidget.open('offerSlug')
+  identifier: >-
+    The offer slug — the last path segment of the offer URL, e.g. 'gameday2' from
+    https://gofevo.com/event/gameday2.
+  script_placement: footer or immediately before </body>, site-wide
+  authorization: FEVO must allow-list the embedding domain before the drawer renders
+  gated_offers: the widget detects an access_code= query parameter on the host page URL
+  see: components/fevo-components.yml
+
+cross_links:
+  errors: errors/fevo-problem-types.yml
+  lifecycle: lifecycle/fevo-lifecycle.yml
+  authentication: authentication/fevo-authentication.yml
+  rate_limits: rate-limits/fevo-rate-limits.yml
+  changelog: changelog/fevo-changelog.yml

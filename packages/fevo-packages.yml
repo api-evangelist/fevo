@@ -1,0 +1,138 @@
+generated: '2026-08-12'
+method: searched
+source: >-
+  npm registry (registry.npmjs.org search + metadata for the @fevo-tech scope, maintainer
+  "fevo"), plus the two first-party browser bundles FEVO documents in its Help Center:
+  https://intercom.help/fevoenterprise/en/articles/8986183-distributed-commerce-button
+  and the Fevo.js Button SDK documented at https://www.fevo.com/docs/v1
+note: >-
+  FEVO ships no server-side client library in any language registry. Its only client
+  SDKs are browser bundles delivered from its own CDN hosts, so they have no registry
+  metadata endpoint to query — version/published are read from (or absent in) the URL
+  itself, per the pipeline's CDN rule. The @fevo-tech npm scope is genuinely FEVO's
+  (npm maintainer "fevo") but publishes internal build tooling — forks of
+  graphql-code-generator and of the `obscenity` profanity filter — not API clients.
+  Registries probed with no first-party result: PyPI (fevo -> 404), pkg.go.dev,
+  RubyGems, Packagist, crates.io, NuGet, Maven Central.
+
+packages:
+  - language: javascript
+    registry: cdn
+    name: gm-widget.js
+    description: >-
+      The FEVO Distributed Commerce Button. A single script tag exposes the global
+      GMWidget object; GMWidget.open('offerSlug') opens the FEVO Social Checkout drawer
+      over the host page. This is the current, live first-party client SDK.
+    url: https://gofevo.com/react/dist/js/widget/gm-widget.js?ver=1
+    install: <script src="https://gofevo.com/react/dist/js/widget/gm-widget.js?ver=1"></script>
+    official: true
+    version: null
+    published: null
+    x-version-note: >-
+      Unpinned. The distribution URL carries only a `?ver=1` cache-busting query string,
+      not a release identifier, and the bundle exposes no version constant, so a consumer
+      cannot tell which build they are loading. Observed 2026-08-12: HTTP 200,
+      text/javascript, 80,965 bytes.
+    x-evidence:
+      fetched: '2026-08-12'
+      url: https://gofevo.com/react/dist/js/widget/gm-widget.js?ver=1
+      http_status: 200
+      content_type: text/javascript
+      bytes: 80965
+
+  - language: javascript
+    registry: cdn
+    name: gm-widget.js (UK)
+    description: The United Kingdom distribution of the same Distributed Commerce Button.
+    url: https://gofevo.uk/react/dist/js/widget/gm-widget.js?ver=1
+    install: <script src="https://gofevo.uk/react/dist/js/widget/gm-widget.js?ver=1"></script>
+    official: true
+    version: null
+    published: null
+    x-version-note: >-
+      Documented by FEVO as the UK script tag, but the host does not serve it. Observed
+      2026-08-12: HTTP 200 with content-type text/html and a 120-byte body — an HTML
+      response where JavaScript is documented, which is a miss, not a build.
+    x-evidence:
+      fetched: '2026-08-12'
+      url: https://gofevo.uk/react/dist/js/widget/gm-widget.js?ver=1
+      http_status: 200
+      content_type: text/html
+      bytes: 120
+
+  - language: javascript
+    registry: cdn
+    name: fevo.js
+    description: >-
+      The legacy Fevo Button SDK. Documented at https://www.fevo.com/docs/v1 with
+      Fevo.init({publisherKey, env}) and Fevo.purchase('.fevo-button') bound to a
+      data-event-key attribute. Superseded in practice by gm-widget.js.
+    url: https://sdk.fevo.com/v1/fevo.js
+    install: <script src="https://sdk.fevo.com/v1/fevo.js"></script>
+    official: true
+    status: unavailable
+    version: v1
+    published: null
+    x-version-note: >-
+      Version is only the `/v1/` path segment; there is no point release or registry
+      record. As of 2026-08-12 the URL does not serve the bundle: CloudFront answers
+      HTTP 502 "CloudFront wasn't able to resolve the origin domain name" — the same
+      failure that takes down https://www.fevo.com/docs/v1 and https://www.fevo.com/api/v1.
+      The Internet Archive last captured a working 200 (~3.5 KB) on 2024-07-18.
+    x-evidence:
+      fetched: '2026-08-12'
+      url: https://sdk.fevo.com/v1/fevo.js
+      http_status: 502
+      content_type: text/html
+      note: origin DNS unresolvable at the CDN
+
+  - language: javascript
+    registry: npm
+    name: '@fevo-tech/obscenity'
+    description: >-
+      A profanity and obscenity filtering library for JavaScript/TypeScript, published
+      under FEVO's own npm scope. Internal platform tooling, not an API client.
+    url: https://www.npmjs.com/package/@fevo-tech/obscenity
+    install: npm install @fevo-tech/obscenity
+    official: true
+    sdk: false
+    version: 0.0.18
+    published: '2026-02-25'
+
+  - language: typescript
+    registry: npm
+    name: '@fevo-tech/graphql-codegen-cli'
+    description: >-
+      FEVO's fork of graphql-code-generator, republished under its own scope. One of nine
+      sibling @fevo-tech/graphql-codegen-* packages (core, cli, plugin-helpers, testing,
+      typescript, typescript-operations, typescript-resolvers, typescript-graphql-request,
+      visitor-plugin-common) that all carry the same version and publish date. Internal
+      build tooling, not an API client.
+    url: https://www.npmjs.com/package/@fevo-tech/graphql-codegen-cli
+    install: npm install @fevo-tech/graphql-codegen-cli
+    official: true
+    sdk: false
+    version: 1.15.4
+    published: '2020-06-26'
+    x-version-note: >-
+      Last published 2020-06-26 — six years stale, and eight sibling packages in the same
+      scope share that date. A decay signal about FEVO's internal toolchain, not about a
+      customer-facing SDK.
+
+registries_probed:
+  - registry: npm
+    result: '@fevo-tech scope found (maintainer "fevo"); 10 packages, none an API client'
+  - registry: pypi
+    result: 'no first-party package (https://pypi.org/pypi/fevo/json -> 404)'
+  - registry: rubygems
+    result: no first-party package
+  - registry: packagist
+    result: no first-party package
+  - registry: crates.io
+    result: no first-party package
+  - registry: nuget
+    result: no first-party package
+  - registry: maven-central
+    result: no first-party package
+  - registry: pkg.go.dev
+    result: no first-party module

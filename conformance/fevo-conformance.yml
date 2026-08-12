@@ -1,0 +1,135 @@
+generated: '2026-08-12'
+method: searched
+source: >-
+  https://www.fevo.com/security, https://intercom.help/fevoenterprise/en/articles/8912590-api-faqs,
+  https://intercom.help/fevoenterprise/en/articles/8986183-distributed-commerce-button,
+  https://wf.fevo.com/privacy-policy, plus live probes of every FEVO host on 2026-08-12
+note: >-
+  Cross-cutting standards conformance, asserted only where FEVO says so itself or where a
+  probe settled it. There is no OpenAPI, AsyncAPI, GraphQL SDL or JSON Schema to derive
+  from, so every `conforms: false` below is a recorded absence rather than a failed
+  validation.
+
+standards:
+
+  - id: openapi
+    name: OpenAPI Specification
+    conforms: false
+    evidence: >-
+      No spec at any probed location. /openapi.json, /swagger.json, /api-docs and /docs
+      were probed on www.fevo.com, www.gofevo.com, report.gofevo.com and
+      fevo-enterprise.com — all 404, except the legacy /api/v1 path on www.fevo.com which
+      returns 502. api.fevo.com and api.gofevo.com do not resolve.
+
+  - id: asyncapi
+    name: AsyncAPI
+    conforms: false
+    evidence: >-
+      No event, streaming or webhook surface is documented anywhere in the Help Center or
+      on the marketing site. FEVO's data-out mechanism is a pull-based Order API, not a push.
+
+  - id: graphql
+    name: GraphQL
+    conforms: false
+    evidence: >-
+      /graphql probed on www.gofevo.com and fevo-enterprise.com — 404. FEVO does publish
+      forks of graphql-code-generator under its @fevo-tech npm scope, so GraphQL is used
+      internally, but no endpoint is exposed publicly.
+
+  - id: rfc9457
+    name: 'RFC 9457: Problem Details for HTTP APIs'
+    conforms: false
+    evidence: >-
+      No error envelope of any kind is published. The one documented error is a bare 502
+      for bad credentials. See errors/fevo-problem-types.yml.
+
+  - id: rfc9116
+    name: 'RFC 9116: security.txt'
+    conforms: false
+    evidence: 404 on /.well-known/security.txt across all four FEVO hosts probed 2026-08-12.
+
+  - id: rfc8594
+    name: 'RFC 8594: Sunset HTTP Header'
+    conforms: false
+    evidence: No deprecation or sunset signaling is published. See lifecycle/fevo-lifecycle.yml.
+
+  - id: idempotency
+    name: Idempotent request keys
+    conforms: false
+    evidence: No idempotency key or retry-safety guidance in any FEVO documentation.
+
+  - id: pagination
+    name: Documented pagination
+    conforms: false
+    evidence: >-
+      The Order API is documented as date-range query only, with no statement about cursors,
+      offsets, page size or truncation.
+
+  - id: oauth2
+    name: OAuth 2.0
+    conforms: false
+    evidence: >-
+      Static User ID + Access Key. /.well-known/oauth-authorization-server 404 on all hosts.
+
+  - id: oidc
+    name: OpenID Connect
+    conforms: false
+    evidence: /.well-known/openid-configuration 404 on all hosts.
+
+  - id: a2a
+    name: A2A Agent Card
+    conforms: false
+    evidence: >-
+      /.well-known/agent-card.json and /.well-known/agent.json 404 on www.fevo.com and
+      www.gofevo.com.
+
+  - id: mcp
+    name: Model Context Protocol
+    conforms: false
+    evidence: No MCP server is published or referenced anywhere on FEVO's public surface.
+
+  - id: llmstxt
+    name: llms.txt
+    conforms: false
+    evidence: /llms.txt 404 on www.fevo.com and www.gofevo.com.
+
+  - id: soc2
+    name: SOC 2
+    conforms: partial
+    evidence: >-
+      FEVO states its Information Security Program "follows the criteria set forth by the
+      SOC 2 Framework" and that it undergoes independent third-party assessments. It does
+      not publish a completed Type I or Type II report, an auditor, a scope or a date.
+      See security/fevo-trust-center.yml.
+
+  - id: pci-dss
+    name: PCI DSS
+    conforms: unknown
+    evidence: >-
+      FEVO makes no PCI statement. Observed on a live offer page: card entry is delegated
+      to Braintree hosted fields (with 3-D Secure) and Shift4, plus Apple Pay and Google Pay,
+      which is the standard way a merchant platform reduces its own PCI scope. That is an
+      inference about architecture, not a certification claim, and is recorded as unknown.
+
+  - id: ccpa
+    name: 'CCPA / California privacy'
+    conforms: true
+    evidence: >-
+      FEVO publishes a CCPA Notice, a "Do Not Sell My Personal Information" page
+      (https://wf.fevo.com/do-not-sell-my-personal-information) and a Your Privacy Choices
+      control in the site footer.
+
+  - id: tls
+    name: TLS 1.2+ on public hosts
+    conforms: true
+    evidence: >-
+      TLSv1.3 negotiated on www.fevo.com (cert expires 2026-12-18). FEVO also states
+      "Our applications are encrypted in transit with TLS/SSL." See
+      security/fevo-domain-security.yml — note HSTS is NOT set on www.fevo.com, and
+      fevo.com publishes no DNSSEC and no CAA record, with DMARC at p=none.
+
+summary:
+  standards_asserted: 1
+  standards_partial: 2
+  standards_absent: 12
+  machine_readable_contract: false
