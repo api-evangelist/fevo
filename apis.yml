@@ -22,6 +22,17 @@ modified: '2026-08-12'
 tags:
 - Company
 - Ticketing
+- Event
+- Group Sales
+- Social Commerce
+- E-Commerce
+- Checkout
+- Sports
+- Live Entertainment
+- Embedded Commerce
+tags_raw:
+- Company
+- Ticketing
 - Events
 - Group Sales
 - Social Commerce
@@ -47,6 +58,10 @@ apis:
     noindex). api.fevo.com and api.gofevo.com do not resolve. Recorded as missing rather than
     guessed from the domain.'
   tags:
+  - Order
+  - Reporting
+  - Data Feed
+  tags_raw:
   - Orders
   - Reporting
   - Data Feed
