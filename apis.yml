@@ -10,6 +10,17 @@ description: 'FEVO is a New York social-commerce and group-ticketing platform, l
   FEVO Sales Report fields into a customer data warehouse using a User ID and Access
   Key issued by a FEVO representative. FEVO reports 800+ brands in sports, music and
   entertainment and more than 24 million tickets sold.'
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://cdn.prod.website-files.com/63c2beaea55341844ce65d4e/682d14798ca7154c6364947c_FEVO%20Logomark.png
 url: https://raw.githubusercontent.com/api-evangelist/fevo/refs/heads/main/apis.yml
 x-type: company
